@@ -60,5 +60,7 @@ typings/
 # next.js build output
 .next
 
-pseudocode.txt
+pseudocode.md
 test.html
+
+
