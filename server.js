@@ -1,3 +1,5 @@
+const expressHandlebars = require("express-handlebars");
+
 let express = require("express");
 let cheerio = require("cheerio");
 let mongoose = require("mongoose");
@@ -9,6 +11,9 @@ let PORT = 3000;
 
 let app = express();
 
+app.engine("handlebars", expressHandlebars({ defaultLayout: "main" }));
+app.set("view engine", "handlebars");
+
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static("public"));
@@ -17,6 +22,8 @@ app.use(express.static("public"));
 mongoose.connect("mongodb://localhost/webScraper", { useNewUrlParser: true });
 
 app.get("/scrape", function(req, res) {
+  // drops db when scrape route is run so the data is fresh & there are no dupes
+  mongoose.connection.dropDatabase();
   // Make a request via axios to grab the HTML body from the site of your choice
   axios
     .get("https://www.space.com/science-astronomy/")
@@ -52,7 +59,7 @@ app.get("/scrape", function(req, res) {
             console.log(err);
           });
       });
-      res.send("Scrape Complete");
+      res.send("Scraping Complete.");
     });
 });
 
@@ -60,11 +67,13 @@ app.get("/scrape", function(req, res) {
 app.get("/articles", function(req, res) {
   // TODO: Finish the route so it grabs all of the articles
   // Find all results from the scrapedData collection in the db
-  db.Article.find()
+  db.Article.find({})
     // Throw any errors to the console
-    .then(function(dbPopulate) {
-      // If any Libraries are found, send them to the client with any associated Books
-      res.json(dbPopulate);
+    .then(function(dbArticle) {
+      // If any Libraries are found, send them to the clients
+      res.json(dbArticle);
+      //gives Unhandled Promise Rejection error
+      // res.redirect("/test");
     })
     .catch(function(err) {
       // If an error occurs, send it back to the client
@@ -74,15 +83,10 @@ app.get("/articles", function(req, res) {
 
 // Route for grabbing a specific Article by id, populate it with it's note
 app.get("/articles/:id", function(req, res) {
-  // TODO
-  // ====
-  // Finish the route so it finds one article using the req.params.id,
-  // and run the populate method with "note",
-  // then responds with the article with the note included
   db.Article.findById(req.params.id)
     .populate("note")
     .then(function(dbPopulate) {
-      // If any Libraries are found, send them to the client with any associated Books
+      // If any Libraries are found, send them to the client
       res.json(dbPopulate);
     })
     .catch(function(err) {
@@ -93,11 +97,6 @@ app.get("/articles/:id", function(req, res) {
 
 // Route for saving/updating an Article's associated Note
 app.post("/articles/:id", function(req, res) {
-  // TODO
-  // ====
-  // save the new note that gets posted to the Notes collection
-  // then find an article from the req.params.id
-  // and update it's "note" property with the _id of the new note
   db.Note.create(req.body)
     .then(function(dbPopulate) {
       return db.Article.findOneAndUpdate(
