@@ -18,8 +18,10 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static("public"));
 
+var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/webScraper";
+
 //connection to mongo db
-mongoose.connect("mongodb://localhost/webScraper", { useNewUrlParser: true });
+mongoose.connect(MONGODB_URI, { useNewUrlParser: true });
 
 app.get("/scrape", function(req, res) {
   // drops db when scrape route is run so the data is fresh & there are no dupes
@@ -47,6 +49,11 @@ app.get("/scrape", function(req, res) {
           .text()
           .replace(/\s\s+/g, "")
           .replace("Read More", "");
+        result.articleUrl = "https://www.space.com";
+        result.articleUrl += $(this)
+          .children("p.mod-copy")
+          .children("a.read-url")
+          .attr("href");
 
         // Create a new Article using the `result` object built from scraping
         db.Article.create(result)
@@ -59,7 +66,8 @@ app.get("/scrape", function(req, res) {
             console.log(err);
           });
       });
-      res.send("Scraping Complete.");
+      // res.send("Scraping Complete.");
+      res.redirect("scraped");
     });
 });
 
