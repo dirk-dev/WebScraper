@@ -1,1 +1,9 @@
-<h1>Scraped.handlebars file</h1>
+<h1>Space.com Web Scraper</h1>
+{{#each this}}
+<div id="articles">
+    <h2>{{title}}</h2>
+    <p>{{summary}}</p>
+    <a href="{{articleUrl}}">
+        {{!-- <div id="notes"></div> --}}
+</div>
+{{/each}}

@@ -18,6 +18,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static("public"));
 
+require("./routes/htmlRoutes")(app);
+
 var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/webScraper";
 
 //connection to mongo db
@@ -73,7 +75,6 @@ app.get("/scrape", function(req, res) {
 
 // Route for getting all Articles from the db
 app.get("/articles", function(req, res) {
-  // TODO: Finish the route so it grabs all of the articles
   // Find all results from the scrapedData collection in the db
   db.Article.find({})
     // Throw any errors to the console
