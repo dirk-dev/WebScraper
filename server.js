@@ -82,7 +82,6 @@ app.get("/articles", function(req, res) {
       // If any Libraries are found, send them to the clients
       res.json(dbArticle);
       //gives Unhandled Promise Rejection error
-      // res.redirect("/test");
     })
     .catch(function(err) {
       // If an error occurs, send it back to the client
@@ -90,7 +89,7 @@ app.get("/articles", function(req, res) {
     });
 });
 
-// Route for grabbing a specific Article by id, populate it with it's note
+// Route for grabbing a specific Article by id, populate it with its note
 app.get("/articles/:id", function(req, res) {
   db.Article.findById(req.params.id)
     .populate("note")

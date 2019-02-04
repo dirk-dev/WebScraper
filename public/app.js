@@ -4,15 +4,13 @@ $.getJSON("/articles", function(data) {
   for (var i = 0; i < data.length; i++) {
     // Display the relevant information on the page
     $("#articles").append(
-      "<p data-id='" +
-        data[i]._id +
-        "'>" +
-        data[i].title +
-        "<br />" +
-        data[i].summary +
-        "<br />" +
-        data[i].articleUrl +
-        "<br />"
+      `<div class='each-article'><p data-id=${data[i]._id}</p><h2>${
+        data[i].title
+      }</h2><p>${data[i].summary}</p><a class='article-link' href='${
+        data[i].articleUrl
+      }'target='_blank'>${
+        data[i].articleUrl
+      }</div><div class='article-separator'</div>`
     );
   }
 });

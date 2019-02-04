@@ -1,26 +1,35 @@
 body {
-  background-color: #f2f6d0;
+  background-image: url("../images/galaxy-1540039594700-607.jpg");
+}
+
+nav {
+  background-color: #14509b !important;
 }
 
 h1 {
   text-align: center;
+  color: white;
 }
 
-#wrapper {
-  width: 960px;
-  margin-left: auto;
-  margin-right: auto;
-  padding-top: 5%;
+h2 {
+  font-size: 2em;
+  font-weight: bold;
+  margin: 0;
 }
-#articles {
+
+.each-article {
   margin: 0 auto;
   padding: 10px;
-  background-color: darkgray;
-  /* display: inline-block; */
-  /* overflow: auto; */
-  /* width: 60%; */
-  /* height: 700px; */
+  background-color: whitesmoke;
+  width: 85%;
+  opacity: 0.9;
 }
+
+.article-separator {
+  height: 15px;
+}
+
+/* original css below here */
 #notes {
   float: right;
   width: 30%;
