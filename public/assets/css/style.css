@@ -7,6 +7,10 @@ nav {
   background-color: #14509b !important;
 }
 
+title {
+  text-align: left;
+}
+
 #nav-spacer {
   width: 50px;
   color: red;
