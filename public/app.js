@@ -10,7 +10,7 @@ $.getJSON("/articles", function(data) {
         data[i].articleUrl
       }'target='_blank'>${
         data[i].articleUrl
-      }</div><div class='article-separator'</div>`
+      }</a><a class='save-article-btn waves-light btn'>Save Article</a></div><div class='article-separator'</div>`
     );
   }
 });

@@ -1,9 +1,15 @@
 body {
   background-image: url("../images/galaxy-1540039594700-607.jpg");
+  background-color: black;
 }
 
 nav {
   background-color: #14509b !important;
+}
+
+#nav-spacer {
+  width: 50px;
+  color: red;
 }
 
 h1 {
@@ -25,8 +31,29 @@ h2 {
   opacity: 0.9;
 }
 
+.article-link {
+  font-size: 15px;
+}
+
+.article-link:hover {
+  color: red;
+}
+
+.save-article-btn:hover {
+  background-color: red;
+}
+
+.save-article-btn {
+  margin: 0 10px 0 15px;
+  /* float: right; */
+  color: white;
+  background-color: rgb(12, 116, 214);
+  font-size: 15px;
+  border-radius: 5px;
+}
+
 .article-separator {
-  height: 15px;
+  height: 10px;
 }
 
 /* original css below here */
