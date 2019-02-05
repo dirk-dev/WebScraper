@@ -28,18 +28,17 @@ mongoose.connect(MONGODB_URI, { useNewUrlParser: true });
 app.get("/scrape", function(req, res) {
   // drops db when scrape route is run so the data is fresh & there are no dupes
   mongoose.connection.dropDatabase();
-  // Make a request via axios to grab the HTML body from the site of your choice
+  // Make a request via axios to grab the HTML body
+
   axios
     .get("https://www.space.com/science-astronomy/")
     .then(function(response) {
-      // Load the HTML into cheerio and save it to a letiable
-      // '$' becomes a shorthand for cheerio's selector commands, much like jQuery's '$'
       let $ = cheerio.load(response.data);
 
       let result = {};
 
       $("div.list-text").each(function(i, element) {
-        // console.log(element);
+        console.log(element);
         result.title = $(this)
           .children("h2")
           .children("a")
