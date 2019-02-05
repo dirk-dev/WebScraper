@@ -25,7 +25,7 @@ var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/webScraper";
 //connection to mongo db
 mongoose.connect(MONGODB_URI, { useNewUrlParser: true });
 
-app.get("/scrape", function(req, res) {
+app.get("/scrape-route", function(req, res) {
   // drops db when scrape route is run so the data is fresh & there are no dupes
   mongoose.connection.dropDatabase();
   // Make a request via axios to grab the HTML body
@@ -38,7 +38,7 @@ app.get("/scrape", function(req, res) {
       let result = {};
 
       $("div.list-text").each(function(i, element) {
-        console.log(element);
+        // console.log(element);
         result.title = $(this)
           .children("h2")
           .children("a")
@@ -68,7 +68,7 @@ app.get("/scrape", function(req, res) {
           });
       });
       // res.send("Scraping Complete.");
-      res.redirect("scraped");
+      res.redirect("scrape");
     });
 });
 

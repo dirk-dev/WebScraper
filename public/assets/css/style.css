@@ -36,7 +36,23 @@ h2 {
 }
 
 .article-link:hover {
-  color: red;
+  color: rgb(206, 19, 19);
+}
+
+#scrape-articles-button {
+  background-color: darkred;
+}
+
+#scrape-articles-button:hover {
+  background-color: rgb(231, 16, 16);
+}
+
+.header-btn:hover {
+  background-color: rgb(21, 21, 124);
+}
+
+.header-btn:active {
+  background-color: rgb(166, 166, 209);
 }
 
 .save-article-btn:hover {
