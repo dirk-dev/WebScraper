@@ -8,6 +8,7 @@
     <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
     <title>Space.com WebScraper
     </title>
+    <link href="https://fonts.googleapis.com/css?family=Squada+One" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
@@ -21,31 +22,30 @@
     });</script>
 
 <body>
-    <div>
+    <div class="navbar-fixed">
         <nav class="fixed-nav-bar">
             <div class="nav-wrapper">
-                <a href="/" class="brand-logo">Space.com web scraper</a>
+                <a href="#" class="brand-logo">Space.com web scraper</a>
                 <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
                 <ul class="right hide-on-med-and-down">
 
                     <ul class="right hide-on-med-and-down" id="nav-mobile">
-                        <li><a href="/scrape-route" id="scrape-articles-button">Get New Articles</a></li>
+                        <li><a href="/scrape-route" id="scrape-articles-button">Get Articles</a></li>
                         <li><a href="/" class="header-btn">Saved Articles</a></li>
                         <li class="header-btn"><a href="/scrape">Scraped Articles</a></li>
                     </ul>
                 </ul>
             </div>
         </nav>
-        <ul class="sidenav" id="mobile-demo">
-            <br>
-            <br>
-            <br>
-            <li><a href="/scrape-route">Get New Articles</a></li>
-            <li><a href="/">Saved Articles</a></li>
-            <li><a href="/scrape">Scraped Articles</a></li>
-        </ul>
     </div>
-    <br>
+    <ul class="sidenav" id="mobile-demo">
+        <br>
+        <br>
+
+        <li><a href="/scrape-route">Get Articles</a></li>
+        <li><a href="/">Saved Articles</a></li>
+        <li><a href="/scrape">Scraped Articles</a></li>
+    </ul>
     <br>
     {{{body}}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
