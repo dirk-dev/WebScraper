@@ -61,17 +61,12 @@ nav ul li.active {
   background-color: rgba(0, 0, 0, 0.1);
 }
 
-/* .header-btn:active {
-  background-color: rgb(159, 159, 219);
-} */
-
 .save-article-btn:hover {
   background-color: rgb(9, 122, 24);
 }
 
 .save-article-btn {
   margin: 0 10px 0 15px;
-  /* float: right; */
   color: white;
   background-color: rgb(13, 103, 187);
   font-size: 15px;
