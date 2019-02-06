@@ -2,7 +2,7 @@
 $.getJSON("/articles", function(data) {
   // For each one
   for (let i = 0; i < data.length; i++) {
-    // Display the relevant information on the page
+    // Display the article on the relevant page (saved article or not)
     if (!data[i].isSaved) {
       $("#articles").append(
         `<div class='each-article'><p class="scraped-title"</p><h2 class="scraped-title">${
@@ -17,6 +17,22 @@ $.getJSON("/articles", function(data) {
           data[i]._id
         }>Save Article</a></div><div class='article-separator'</div>`
       );
+    } else {
+      {
+        $("#saved-articles").append(
+          `<div class='each-article'><p class="scraped-title"</p><h2 class="scraped-title">${
+            data[i].title
+          }</h2><p class="scraped-summary">${
+            data[i].summary
+          }</p><a class='article-link' href='${
+            data[i].articleUrl
+          }'target='_blank'>${
+            data[i].articleUrl
+          }</a><a class='delete-article-btn waves-light btn' data-id=${
+            data[i]._id
+          }>Delete Article</a></div><div class='article-separator'</div>`
+        );
+      }
     }
   }
 });
@@ -45,6 +61,31 @@ $(document).on("click", ".save-article-btn", function() {
     });
 });
 
+// When you click the DELETE ARTICLE button
+$(document).on("click", ".delete-article-btn", function() {
+  // console.log(this);
+  // Grab the id associated with the article from the submit button
+  var thisId = $(this).attr("data-id");
+  console.log("thisId = ", thisId);
+
+  // PUT for changing article status to isSaved:false
+  $.ajax({
+    method: "PUT",
+    url: "/delete",
+    data: {
+      title: $(".scraped-title").val(),
+      summary: $(".scraped-summary").val(),
+      articleUrl: $(".article-link").val(),
+      thisId: thisId
+    }
+  })
+    // With that done
+    .then(function(data) {
+      location.reload();
+    });
+});
+
+//////////////////////////////////////////
 // Whenever someone clicks a p tag
 $(document).on("click", "p", function() {
   // Empty the notes from the note section
@@ -109,9 +150,3 @@ $(document).on("click", "#savenote", function() {
   $("#titleinput").val("");
   $("#bodyinput").val("");
 });
-
-// app.get("/", function(req, res) {
-//   res.render("home");
-// });
-
-// app.listen(3000);

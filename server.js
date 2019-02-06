@@ -86,6 +86,20 @@ app.put("/submit", function(req, res) {
   });
 });
 
+// PUT route for deleting article out of saved articles
+app.put("/delete", function(req, res) {
+  console.log("line 80", req.body);
+  db.Article.findOneAndUpdate(
+    { _id: req.body.thisId },
+    { $set: { isSaved: false } },
+    { new: true }
+  ).then(function(dbArticle) {
+    // If the Library was updated successfully, send it back to the client
+    console.log(dbArticle);
+    res.json("true");
+  });
+});
+
 // Route for getting all Articles from the db
 app.get("/articles", function(req, res) {
   // Find all results from the scrapedData collection in the db
