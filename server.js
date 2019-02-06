@@ -72,25 +72,18 @@ app.get("/scrape-route", function(req, res) {
     });
 });
 
-// POST route for changing an article to 'isSaved: true'
-app.post("/submit", function(req, res) {
-  console.log("line 80", res);
-  db.Article.findOne({ _id: req.params.thisId })
-    .then(function(dbArticle) {
-      return db.Article.findOneAndUpdate(
-        {},
-        { $set: { article: dbArticle._id } },
-        { isSaved: true }
-      );
-    })
-    .then(function(dbArticle) {
-      // If the Library was updated successfully, send it back to the client
-      res.json(dbArticle);
-    })
-    .catch(function(err) {
-      // If an error occurs, send it back to the client
-      res.json(err);
-    });
+// PUT route for changing an article to 'isSaved: true'
+app.put("/submit", function(req, res) {
+  console.log("line 80", req.body);
+  db.Article.findOneAndUpdate(
+    { _id: req.body.thisId },
+    { $set: { isSaved: true } },
+    { new: true }
+  ).then(function(dbArticle) {
+    // If the Library was updated successfully, send it back to the client
+    console.log(dbArticle);
+    res.json("true");
+  });
 });
 
 // Route for getting all Articles from the db

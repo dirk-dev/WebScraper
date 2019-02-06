@@ -3,19 +3,21 @@ $.getJSON("/articles", function(data) {
   // For each one
   for (let i = 0; i < data.length; i++) {
     // Display the relevant information on the page
-    $("#articles").append(
-      `<div class='each-article'><p class="scraped-title"</p><h2 class="scraped-title">${
-        data[i].title
-      }</h2><p class="scraped-summary">${
-        data[i].summary
-      }</p><a class='article-link' href='${
-        data[i].articleUrl
-      }'target='_blank'>${
-        data[i].articleUrl
-      }</a><a class='save-article-btn waves-light btn' data-id=${
-        data[i]._id
-      }>Save Article</a></div><div class='article-separator'</div>`
-    );
+    if (!data[i].isSaved) {
+      $("#articles").append(
+        `<div class='each-article'><p class="scraped-title"</p><h2 class="scraped-title">${
+          data[i].title
+        }</h2><p class="scraped-summary">${
+          data[i].summary
+        }</p><a class='article-link' href='${
+          data[i].articleUrl
+        }'target='_blank'>${
+          data[i].articleUrl
+        }</a><a class='save-article-btn waves-light btn' data-id=${
+          data[i]._id
+        }>Save Article</a></div><div class='article-separator'</div>`
+      );
+    }
   }
 });
 
@@ -26,9 +28,9 @@ $(document).on("click", ".save-article-btn", function() {
   var thisId = $(this).attr("data-id");
   console.log("thisId = ", thisId);
 
-  // POST for changing article status to isSaved:true
+  // PUT for changing article status to isSaved:true
   $.ajax({
-    method: "POST",
+    method: "PUT",
     url: "/submit",
     data: {
       title: $(".scraped-title").val(),
@@ -39,10 +41,7 @@ $(document).on("click", ".save-article-btn", function() {
   })
     // With that done
     .then(function(data) {
-      // Log the response
-      console.log(data);
-      // Empty the notes section
-      // $("#notes").empty();
+      location.reload();
     });
 });
 
