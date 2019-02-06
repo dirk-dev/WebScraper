@@ -8,32 +8,50 @@
     <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
     <title>Space.com WebScraper
     </title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <link rel="stylesheet" type="text/css" href="./assets/css/style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
 
 </head>
+<script>$(document).ready(function () {
+        $(".sidenav").sidenav();
+    });</script>
 
 <body>
-    <div class="navbar-fixed">
-        <nav>
+    <div>
+        <nav class="fixed-nav-bar">
             <div class="nav-wrapper">
-                <a href="/" class="brand-logo center">Space.com Web Scraper</a>
+                <a href="/" class="brand-logo">Space.com web scraper</a>
+                <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
                 <ul class="right hide-on-med-and-down">
-                    <li><a href="/scrape-route" id="scrape-articles-button">Scrape Articles</a></li>
-                    <li><a href="/" class="header-btn">Saved Articles</a></li>
-                    <li class="header-btn"><a href="/scrape">Scraped Articles</a></li>
+
+                    <ul class="right hide-on-med-and-down" id="nav-mobile">
+                        <li><a href="/scrape-route" id="scrape-articles-button">Get New Articles</a></li>
+                        <li><a href="/" class="header-btn">Saved Articles</a></li>
+                        <li class="header-btn"><a href="/scrape">Scraped Articles</a></li>
+                    </ul>
                 </ul>
             </div>
         </nav>
+        <ul class="sidenav" id="mobile-demo">
+            <br>
+            <br>
+            <br>
+            <li><a href="/scrape-route">Get New Articles</a></li>
+            <li><a href="/">Saved Articles</a></li>
+            <li><a href="/scrape">Scraped Articles</a></li>
+        </ul>
     </div>
     <br>
-
-
+    <br>
+    <br>
+    <br>
     {{{body}}}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script src="app.js"></script>
-</body>
 </body>
 
 </html>

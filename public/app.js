@@ -1,12 +1,10 @@
-// Grab the articles as a json
+// Grab the articles as json
 $.getJSON("/articles", function(data) {
   // For each one
   for (let i = 0; i < data.length; i++) {
     // Display the relevant information on the page
     $("#articles").append(
-      `<div class='each-article'><p class="scraped-title" data-id=${
-        data[i]._id
-      }</p><h2 class="scraped-title">${
+      `<div class='each-article'><p class="scraped-title"</p><h2 class="scraped-title">${
         data[i].title
       }</h2><p class="scraped-summary">${
         data[i].summary
@@ -14,27 +12,29 @@ $.getJSON("/articles", function(data) {
         data[i].articleUrl
       }'target='_blank'>${
         data[i].articleUrl
-      }</a><a class='save-article-btn waves-light btn'>Save Article</a></div><div class='article-separator'</div>`
+      }</a><a class='save-article-btn waves-light btn' data-id=${
+        data[i]._id
+      }>Save Article</a></div><div class='article-separator'</div>`
     );
   }
 });
 
 // When you click the SAVE ARTICLE button
 $(document).on("click", ".save-article-btn", function() {
+  // console.log(this);
   // Grab the id associated with the article from the submit button
   var thisId = $(this).attr("data-id");
-  console.log(thisId);
+  console.log("thisId = ", thisId);
 
-  // Run a POST request to change the note, using what's entered in the inputs
+  // POST for changing article status to isSaved:true
   $.ajax({
     method: "POST",
-    url: "/articles" + thisId,
+    url: "/submit",
     data: {
-      // Value taken from title input
       title: $(".scraped-title").val(),
-      // Value taken from note textarea
-      summary: $(".scraped-summary").val()
-      // articleUrl:
+      summary: $(".scraped-summary").val(),
+      articleUrl: $(".article-link").val(),
+      thisId: thisId
     }
   })
     // With that done
@@ -44,10 +44,6 @@ $(document).on("click", ".save-article-btn", function() {
       // Empty the notes section
       // $("#notes").empty();
     });
-
-  // Also, remove the values entered in the input and textarea for note entry
-  $("#titleinput").val("");
-  $("#bodyinput").val("");
 });
 
 // Whenever someone clicks a p tag

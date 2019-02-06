@@ -20,14 +20,13 @@ app.use(express.static("public"));
 
 require("./routes/htmlRoutes")(app);
 
-var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/webScraper";
+// connection info for deployed app/development
+let MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/webScraper";
 
 //connection to mongo db
 mongoose.connect(MONGODB_URI, { useNewUrlParser: true });
 
 app.get("/scrape-route", function(req, res) {
-  // drops db when scrape route is run so the data is fresh & there are no dupes
-  mongoose.connection.dropDatabase();
   // Make a request via axios to grab the HTML body
 
   axios
@@ -36,7 +35,7 @@ app.get("/scrape-route", function(req, res) {
       let $ = cheerio.load(response.data);
 
       let result = {};
-
+      // scraping function - steps down through HTML elements to get desired items
       $("div.list-text").each(function(i, element) {
         // console.log(element);
         result.title = $(this)
@@ -58,9 +57,10 @@ app.get("/scrape-route", function(req, res) {
 
         // Create a new Article using the `result` object built from scraping
         db.Article.create(result)
+
           .then(function(dbArticle) {
             // View the added result in the console
-            console.log("dbArticle", dbArticle);
+            // console.log("dbArticle", dbArticle);
           })
           .catch(function(err) {
             // If an error occurred, log it
@@ -69,6 +69,27 @@ app.get("/scrape-route", function(req, res) {
       });
       // res.send("Scraping Complete.");
       res.redirect("scrape");
+    });
+});
+
+// POST route for changing an article to 'isSaved: true'
+app.post("/submit", function(req, res) {
+  console.log("line 80", res);
+  db.Article.findOne({ _id: req.params.thisId })
+    .then(function(dbArticle) {
+      return db.Article.findOneAndUpdate(
+        {},
+        { $set: { article: dbArticle._id } },
+        { isSaved: true }
+      );
+    })
+    .then(function(dbArticle) {
+      // If the Library was updated successfully, send it back to the client
+      res.json(dbArticle);
+    })
+    .catch(function(err) {
+      // If an error occurs, send it back to the client
+      res.json(err);
     });
 });
 
@@ -87,6 +108,8 @@ app.get("/articles", function(req, res) {
       res.json(err);
     });
 });
+
+//////////////////////////////////////////
 
 // Route for grabbing a specific Article by id, populate it with its note
 app.get("/articles/:id", function(req, res) {
