@@ -1,6 +1,18 @@
 <div id="wrapper">
     <h1>Your saved articles</h1>
-    <div id="notes"></div>
+    <div id="all-notes">
+        <span id="notes-header">Notes:</span><span>
+            <button id="closebutton">x</button>
+        </span>
+        <br>
+        {{!-- <h2 class='note-title' id='title'></h2> --}}
+
+        <div id="individual-note"></div>
+
+        <button data-id='${data._id}' id='savenote'>Save Note</button>
+
+    </div>
+
     <div id="saved-articles">
     </div>
 </div>

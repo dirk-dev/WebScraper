@@ -2,10 +2,10 @@
 $.getJSON("/articles", function(data) {
   // For each one
   for (let i = 0; i < data.length; i++) {
-    // Display the article on the relevant page (saved article or not)
+    // Display the article on the relevant page (saved article or unsaved)
     if (!data[i].isSaved) {
       $("#articles").append(
-        `<div class='each-article'><p class="scraped-title"</p><h2 class="scraped-title">${
+        `<div class='each-article'><h2 class="scraped-title">${
           data[i].title
         }</h2><p class="scraped-summary">${
           data[i].summary
@@ -20,7 +20,7 @@ $.getJSON("/articles", function(data) {
     } else {
       {
         $("#saved-articles").append(
-          `<div class='each-article'><p class="scraped-title"</p><h2 class="scraped-title">${
+          `<div class='each-article'><h2 class="scraped-title">${
             data[i].title
           }</h2><p class="scraped-summary">${
             data[i].summary
@@ -30,9 +30,9 @@ $.getJSON("/articles", function(data) {
             data[i].articleUrl
           }</a><br><a class='delete-article-btn waves-light btn' data-id=${
             data[i]._id
-          }>Delete Article</a> <a class='add-note-btn btn' data-target='modal1' data-id=${
+          }>Delete Article</a> <a class='show-notes-btn btn' data-target='modal1' data-id=${
             data[i]._id
-          }>Add a note</a></div><div class='article-separator'</div>`
+          }>Show notes</a></div><div class='article-separator'</div>`
         );
       }
     }
@@ -83,12 +83,12 @@ $(document).on("click", ".delete-article-btn", function() {
   });
 });
 
-// Adding a note
-$(document).on("click", ".add-note-btn", function() {
-  document.getElementById("notes").style.visibility = "visible";
+$(document).on("click", ".show-notes-btn", function() {
+  document.getElementById("all-notes").style.visibility = "visible";
+  document.getElementById("individual-note").style.visibility = "visible";
 
   // Empty the notes from the note section
-  $("#notes").empty();
+  $("#individual-note").empty();
   // Save the id
   var thisId = $(this).attr("data-id");
   console.log("thisId - line 94", thisId); //returns good data
@@ -103,18 +103,14 @@ $(document).on("click", ".add-note-btn", function() {
       console.log("line 103", data); //correct
       // The title of the article
 
-      $("#notes").append(`<h2 class='note-title'id='title'>${data.title}</h2>`);
-      $("#notes").append("<span><button id='closebutton'>x</button></span>");
-      // // An input to enter a new title
-      $("#notes").append("<input id='titleinput' name='title'>");
       // A textarea to add a new note body
-      $("#notes").append("<textarea id='bodyinput' name='body'></textarea>");
-      // A button to submit a new note, with the id of the article saved to it
-      $("#notes").append(
-        `<button data-id='${data._id}' id='savenote'>Save Note</button>`
+      $("#individual-note").append(
+        "<textarea id='bodyinput' name='body'></textarea>"
       );
-      $("#notes").append(
-        `<button data-id='${data._id}' id='deletenote'>Delete Note</button>`
+      // A button to submit a new note, with the id of the article saved to it
+
+      $("#individual-note").append(
+        `<button data-id='${data._id}' class='deletenote'>Delete Note</button>`
         // console.log("line 121", data._id)
       );
 
@@ -128,13 +124,21 @@ $(document).on("click", ".add-note-btn", function() {
     });
 });
 
-//cancels out of the note
+// getting all notes
+$.getJSON("/notes", function(data) {
+  console.log("notes JSON", data);
+});
+
+//closes out of the notes window
 $(document).on("click", "#closebutton", function() {
-  document.getElementById("notes").style.visibility = "hidden";
+  document.getElementById("individual-note").style.visibility = "hidden";
+  document.getElementById("all-notes").style.visibility = "hidden";
 });
 
 // When you click the savenote button
 $(document).on("click", "#savenote", function() {
+  document.getElementById("all-notes").style.visibility = "hidden";
+
   // Grab the id associated with the article from the submit button
   var thisId = $(this).attr("data-id");
   console.log("line 142", thisId);
@@ -154,8 +158,8 @@ $(document).on("click", "#savenote", function() {
     .then(function(data) {
       // Log the response
       console.log(data);
-      // Empty the notes section
-      $("#notes").empty();
+      // Empty the individual-note section
+      $("#individual-note").empty();
     });
 
   // Also, remove the values entered in the input and textarea for note entry

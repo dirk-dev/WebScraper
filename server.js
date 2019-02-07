@@ -75,12 +75,12 @@ app.get("/scrape-route", function(req, res) {
 // PUT route for changing an article to 'isSaved: true'
 app.put("/submit", function(req, res) {
   console.log("line 80", req.body);
+  //did this with Doug
   db.Article.findOneAndUpdate(
     { _id: req.body.thisId },
     { $set: { isSaved: true } },
     { new: true }
   ).then(function(dbArticle) {
-    // If the Library was updated successfully, send it back to the client
     console.log(dbArticle);
     res.json("true");
   });
@@ -94,7 +94,6 @@ app.put("/delete", function(req, res) {
     { $set: { isSaved: false } },
     { new: true }
   ).then(function(dbArticle) {
-    // If the Library was updated successfully, send it back to the client
     console.log(dbArticle);
     res.json("true");
   });
@@ -106,12 +105,23 @@ app.get("/articles", function(req, res) {
   db.Article.find({})
     // Throw any errors to the console
     .then(function(dbArticle) {
-      // If any Libraries are found, send them to the clients
       res.json(dbArticle);
       //gives Unhandled Promise Rejection error
     })
     .catch(function(err) {
-      // If an error occurs, send it back to the client
+      res.json(err);
+    });
+});
+
+// Route for getting all NOTES from the db
+app.get("/notes", function(req, res) {
+  // Find all results from the scrapedData collection in the db
+  db.Note.find({})
+    .then(function(dbNote) {
+      res.json(dbNote);
+      //gives Unhandled Promise Rejection error
+    })
+    .catch(function(err) {
       res.json(err);
     });
 });
@@ -123,11 +133,9 @@ app.get("/articles/:id", function(req, res) {
   db.Article.findById(req.params.id)
     .populate("note")
     .then(function(dbArticle) {
-      // If any Libraries are found, send them to the client
       res.json(dbArticle);
     })
     .catch(function(err) {
-      // If an error occurs, send it back to the client
       res.json(err);
     });
 });
@@ -143,12 +151,10 @@ app.post("/articles/:id", function(req, res) {
       );
     })
     .then(function(dbArticle) {
-      console.log("server.js line 146", dbArticle._id);
-      // If the Library was updated successfully, send it back to the client
+      console.log("server.js line 154", dbArticle._id);
       res.json(dbArticle);
     })
     .catch(function(err) {
-      // If an error occurs, send it back to the client
       res.json(err);
     });
 });

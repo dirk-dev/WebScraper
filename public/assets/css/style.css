@@ -91,13 +91,13 @@ h2 {
 }
 
 .save-article-btn:hover,
-.add-note-btn:hover,
+.show-notes-btn:hover,
 #savenote:hover {
   background-color: rgb(9, 122, 24);
 }
 
 .delete-article-btn,
-#deletenote {
+.deletenote {
   margin: 0 10px 0 15px;
   /* float: right; */
   color: white;
@@ -108,11 +108,11 @@ h2 {
 }
 
 .delete-article-btn:hover,
-#deletenote:hover {
+.deletenote:hover {
   background-color: rgb(170, 14, 14);
 }
 
-.add-note-btn {
+.show-notes-btn {
   margin: 0 10px 0 15px;
   color: white;
   background-color: rgb(13, 103, 187);
@@ -125,24 +125,38 @@ h2 {
   height: 8px;
 }
 
-#deletenote,
+.deletenote,
 #cancelnote,
 #savenote {
   margin: 10px;
   height: 35px;
 }
 
-#notes {
-  z-index: 9999;
+#all-notes {
+  width: 40%;
+  margin: 0 25px 0 50px;
+  padding: 15px;
+  background-color: red;
+  z-index: 9998;
   float: right;
-  width: 30%;
-  background-color: #fcf5c7;
-  margin: 10px 25px 0 50px;
   position: absolute;
+  background-color: #fcf5c7;
+
   -webkit-box-shadow: 10px 22px 31px 1px rgba(0, 0, 0, 0.75);
   -moz-box-shadow: 10px 22px 31px 1px rgba(0, 0, 0, 0.75);
   box-shadow: 10px 22px 31px 1px rgba(0, 0, 0, 0.75);
-  /* padding: 10px; */
+  visibility: hidden;
+}
+
+#notes-header {
+  font-size: 2em;
+  font-weight: bold;
+  visibility: none;
+}
+
+#bodyinput {
+  height: 75px;
+  background-color: whitesmoke;
 }
 
 #closebutton {
@@ -182,8 +196,8 @@ textarea {
     width: 70%;
   }
 
-  #notes {
-    width: 75%;
+  #all-notes {
+    width: 85%;
   }
 
   a.brand-logo {
@@ -194,6 +208,11 @@ textarea {
 
   h1 {
     font-size: 30px;
+  }
+
+  .sidenav {
+    width: 30%;
+    padding: 2px;
   }
 }
 
@@ -206,5 +225,10 @@ textarea {
 
   h1 {
     font-size: 25px;
+  }
+
+  .sidenav {
+    width: 55%;
+    padding: 2px;
   }
 }
