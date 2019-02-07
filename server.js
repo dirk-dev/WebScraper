@@ -20,6 +20,23 @@ app.use(express.static("public"));
 
 require("./routes/htmlRoutes")(app);
 
+//added to connect with mLab on Heroku
+mongoose.connect(
+  "mongodb://<dbuser>:<dbpassword>@ds125225.mlab.com:25225/heroku_jwh5db9f"
+);
+
+let mongoosedb = mongoose.connection;
+
+mongoosedb.on("error", function(error) {
+  console.log("Mongoose Error: ", error);
+});
+
+mongoosedb.once("open", function() {
+  console.log("Mongoose connection successful.");
+});
+
+///////////////////////////////////
+
 // connection info for deployed app/development
 let MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/webScraper";
 
