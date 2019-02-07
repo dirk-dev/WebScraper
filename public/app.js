@@ -83,7 +83,6 @@ $(document).on("click", ".delete-article-btn", function() {
   });
 });
 
-//////////////////////////////////////////
 // Adding a note
 $(document).on("click", ".add-note-btn", function() {
   document.getElementById("notes").style.visibility = "visible";
@@ -92,7 +91,7 @@ $(document).on("click", ".add-note-btn", function() {
   $("#notes").empty();
   // Save the id
   var thisId = $(this).attr("data-id");
-  console.log(thisId); //returns good data
+  console.log("thisId - line 94", thisId); //returns good data
 
   // Now make an ajax call for the Article
   $.ajax({
@@ -101,16 +100,13 @@ $(document).on("click", ".add-note-btn", function() {
   })
     // With that done, add the note information to the page
     .then(function(data) {
-      console.log(data);
+      console.log("line 103", data); //correct
       // The title of the article
 
-      $("#notes").append(
-        `<h2 class='note-title'id='titleinput'>${data.title}</h2>`
-      );
+      $("#notes").append(`<h2 class='note-title'id='title'>${data.title}</h2>`);
       $("#notes").append("<span><button id='closebutton'>x</button></span>");
-
       // // An input to enter a new title
-      // $("#notes").append("<input id='titleinput' name='title' >");
+      $("#notes").append("<input id='titleinput' name='title'>");
       // A textarea to add a new note body
       $("#notes").append("<textarea id='bodyinput' name='body'></textarea>");
       // A button to submit a new note, with the id of the article saved to it
@@ -119,11 +115,10 @@ $(document).on("click", ".add-note-btn", function() {
       );
       $("#notes").append(
         `<button data-id='${data._id}' id='deletenote'>Delete Note</button>`
+        // console.log("line 121", data._id)
       );
-      // $("#notes").append(
-      //   `<button data-id='${data._id}' id='cancelnote'>Cancel</button>`
-      // );
-      // If there's a note in the article
+
+      // If there's a note in the article - not working
       if (data.note) {
         // Place the title of the note in the title input
         $("#titleinput").val(data.note.title);
@@ -142,6 +137,7 @@ $(document).on("click", "#closebutton", function() {
 $(document).on("click", "#savenote", function() {
   // Grab the id associated with the article from the submit button
   var thisId = $(this).attr("data-id");
+  console.log("line 142", thisId);
 
   // Run a POST request to change the note, using what's entered in the inputs
   $.ajax({

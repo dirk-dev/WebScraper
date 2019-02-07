@@ -88,7 +88,7 @@ app.put("/submit", function(req, res) {
 
 // PUT route for deleting article out of saved articles
 app.put("/delete", function(req, res) {
-  console.log("line 80", req.body);
+  // console.log("line 91", req.body);
   db.Article.findOneAndUpdate(
     { _id: req.body.thisId },
     { $set: { isSaved: false } },
@@ -122,9 +122,9 @@ app.get("/articles", function(req, res) {
 app.get("/articles/:id", function(req, res) {
   db.Article.findById(req.params.id)
     .populate("note")
-    .then(function(dbPopulate) {
+    .then(function(dbArticle) {
       // If any Libraries are found, send them to the client
-      res.json(dbPopulate);
+      res.json(dbArticle);
     })
     .catch(function(err) {
       // If an error occurs, send it back to the client
@@ -135,16 +135,17 @@ app.get("/articles/:id", function(req, res) {
 // Route for saving/updating an Article's associated Note
 app.post("/articles/:id", function(req, res) {
   db.Note.create(req.body)
-    .then(function(dbPopulate) {
+    .then(function(dbNote) {
       return db.Article.findOneAndUpdate(
         { _id: req.params.id },
-        { $push: { note: dbPopulate._id } },
+        { note: dbNote._id },
         { new: true }
       );
     })
-    .then(function(dbPopulate) {
+    .then(function(dbArticle) {
+      console.log("server.js line 146", dbArticle._id);
       // If the Library was updated successfully, send it back to the client
-      res.json(dbPopulate);
+      res.json(dbArticle);
     })
     .catch(function(err) {
       // If an error occurs, send it back to the client
