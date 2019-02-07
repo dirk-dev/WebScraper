@@ -4,8 +4,13 @@ body {
 }
 
 nav {
-  background: rgb(2,0,36);
-background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 35%, rgba(0,140,255,1) 100%); !important;
+  background: rgb(2, 0, 36);
+  background: linear-gradient(
+    90deg,
+    rgba(2, 0, 36, 1) 0%,
+    rgba(9, 9, 121, 1) 35%,
+    rgba(0, 140, 255, 1) 100%
+  );
 }
 
 .sidenav-trigger {
@@ -22,7 +27,15 @@ h1 {
   text-align: center;
   color: white;
   margin: 0 0 15px 0;
-  font-size: 35px;
+  font-family: "Squada One", cursive;
+  font-size: 45px;
+}
+
+.modal {
+  width: 200px;
+  height: 200px;
+  background-color: darkgoldenrod;
+  z-index: 9999;
 }
 
 p.scraped-title {
@@ -50,6 +63,7 @@ h2 {
   background-color: whitesmoke;
   width: 85%;
   opacity: 0.9;
+  z-index: 1;
 }
 
 .article-link {
@@ -65,15 +79,9 @@ h2 {
   background-color: rgb(21, 21, 124);
 }
 
-nav ul li.active {
-  background-color: rgba(0, 0, 0, 0.1);
-}
-
-.save-article-btn:hover {
-  background-color: rgb(9, 122, 24);
-}
-
-.save-article-btn {
+.save-article-btn,
+#savenote,
+#cancelnote {
   margin: 0 10px 0 15px;
   color: white;
   background-color: rgb(13, 103, 187);
@@ -82,7 +90,14 @@ nav ul li.active {
   margin: 10px 0 0 10px;
 }
 
-.delete-article-btn {
+.save-article-btn:hover,
+.add-note-btn:hover,
+#savenote:hover {
+  background-color: rgb(9, 122, 24);
+}
+
+.delete-article-btn,
+#deletenote {
   margin: 0 10px 0 15px;
   /* float: right; */
   color: white;
@@ -92,18 +107,83 @@ nav ul li.active {
   margin: 10px 0 0 10px;
 }
 
-.delete-article-btn:hover {
+.delete-article-btn:hover,
+#deletenote:hover {
   background-color: rgb(170, 14, 14);
+}
+
+.add-note-btn {
+  margin: 0 10px 0 15px;
+  color: white;
+  background-color: rgb(13, 103, 187);
+  font-size: 15px;
+  border-radius: 5px;
+  margin: 10px 0 0 10px;
 }
 
 .article-separator {
   height: 8px;
 }
 
-@media only screen and (max-width: 768px) {
+#deletenote,
+#cancelnote,
+#savenote {
+  margin: 10px;
+  height: 35px;
+}
+
+#notes {
+  z-index: 9999;
+  float: right;
+  width: 30%;
+  background-color: #fcf5c7;
+  margin: 10px 25px 0 50px;
+  position: absolute;
+  -webkit-box-shadow: 10px 22px 31px 1px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 10px 22px 31px 1px rgba(0, 0, 0, 0.75);
+  box-shadow: 10px 22px 31px 1px rgba(0, 0, 0, 0.75);
+  /* padding: 10px; */
+}
+
+#closebutton {
+  float: right;
+  display: inline-block;
+}
+
+#closebutton:active {
+  background-color: rgb(226, 217, 217);
+}
+
+.note-title {
+  font-size: 1em;
+  background-color: #fcf5c7;
+  padding: 4px 0 4px 4px;
+}
+
+textarea,
+input {
+  display: block;
+  width: 100%;
+  background-color: #fcf5c7;
+  padding: 4px 0 0 4px;
+}
+input {
+  height: 36px;
+  font-size: 24px;
+}
+textarea {
+  height: 200px;
+  font-size: 18px;
+}
+
+@media only screen and (max-width: 860px) {
   .brand-logo {
     font-size: 30px;
     width: 70%;
+  }
+
+  #notes {
+    width: 75%;
   }
 
   a.brand-logo {
@@ -127,24 +207,4 @@ nav ul li.active {
   h1 {
     font-size: 25px;
   }
-}
-
-/* original css below here */
-#notes {
-  float: right;
-  width: 30%;
-}
-textarea,
-input {
-  display: block;
-  width: 100%;
-  background-color: #fcf5c7;
-}
-input {
-  height: 36px;
-  font-size: 24px;
-}
-textarea {
-  height: 200px;
-  font-size: 18px;
 }
