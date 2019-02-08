@@ -1,6 +1,6 @@
 # WebScraper
 
-![WebScraper](assets/images/webscraper_screenshot.png)
+![WebScraper](public/assets/images/webscraper_screenshot.png)
 
 ## [Deployed app](https://evening-fjord-22092.herokuapp.com/)
 
