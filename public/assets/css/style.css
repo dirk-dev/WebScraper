@@ -132,6 +132,16 @@ h2 {
   height: 35px;
 }
 
+.deletenote {
+  float: right;
+}
+
+.current-notes {
+  height: 100px;
+  width: 75%;
+  float: left;
+}
+
 #all-notes {
   width: 40%;
   margin: 0 25px 0 50px;
@@ -154,7 +164,7 @@ h2 {
   visibility: none;
 }
 
-#bodyinput {
+.bodyinput {
   height: 75px;
   background-color: whitesmoke;
 }

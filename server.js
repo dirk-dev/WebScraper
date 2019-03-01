@@ -74,8 +74,7 @@ app.get("/scrape-route", function(req, res) {
 
 // PUT route for changing an article to 'isSaved: true'
 app.put("/submit", function(req, res) {
-  console.log("line 80", req.body);
-  //did this with Doug
+  // console.log("line 77", req.body);
   db.Article.findOneAndUpdate(
     { _id: req.body.thisId },
     { $set: { isSaved: true } },
@@ -126,12 +125,10 @@ app.get("/notes", function(req, res) {
     });
 });
 
-//////////////////////////////////////////
-
 // Route for grabbing a specific Article by id, populate it with its note
 app.get("/articles/:id", function(req, res) {
   db.Article.findById(req.params.id)
-    .populate("note")
+    .populate("notes")
     .then(function(dbArticle) {
       res.json(dbArticle);
     })
@@ -144,20 +141,57 @@ app.get("/articles/:id", function(req, res) {
 app.post("/articles/:id", function(req, res) {
   db.Note.create(req.body)
     .then(function(dbNote) {
+      console.log("line 144", req.params.id);
       return db.Article.findOneAndUpdate(
         { _id: req.params.id },
-        { note: dbNote._id },
+        { $push: { notes: dbNote._id } },
         { new: true }
       );
     })
     .then(function(dbArticle) {
-      console.log("server.js line 154", dbArticle._id);
+      console.log("server.js line 152", dbArticle);
       res.json(dbArticle);
     })
     .catch(function(err) {
       res.json(err);
     });
 });
+
+// Route for deleting an Article's associated Note
+app.put("/articles/:id", function(req, res) {
+  db.Note.findOneAndRemove(req.body)
+
+    .then(function(dbNote) {
+      console.log("server.js line 172", dbNote);
+      res.json(dbNote);
+    })
+    .catch(function(err) {
+      res.json(err);
+    });
+});
+
+/*
+// DELETE route for deleting a note
+app.put("/deletenote", function(req, res) {
+  // console.log("line 91", req.body);
+  db.Note.create(req.body)
+    .then(function(dbNote) {
+      console.log("line 165", req.params.id);
+      return db.Article.findOneAndUpdate(
+        { _id: req.params.id },
+        { $push: { notes: dbNote._id } },
+        { new: true }
+      );
+    })
+    .then(function(dbArticle) {
+      console.log("server.js line 154", dbArticle);
+      res.json(dbArticle);
+    })
+    .catch(function(err) {
+      res.json(err);
+    });
+});
+*/
 
 // Start the server
 app.listen(PORT, function() {
