@@ -33,11 +33,13 @@ app.get("/scrape-route", function(req, res) {
     .get("https://www.space.com/science-astronomy/")
     .then(function(response) {
       let $ = cheerio.load(response.data);
+      console.log("scraping");
+      console.log(`response ${response}`);
 
       let result = {};
       // scraping function - steps down through HTML elements to get desired items
       $("div.list-text").each(function(i, element) {
-        // console.log(element);
+        console.log(element);
         result.title = $(this)
           .children("h2")
           .children("a")
