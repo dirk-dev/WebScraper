@@ -27,6 +27,7 @@ let MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/webScraper";
 mongoose.connect(MONGODB_URI, { useNewUrlParser: true });
 
 app.get("/scrape-route", function(req, res) {
+  // THIS DOES NOT FIRE
   // Make a request via axios to grab the HTML body
 
   axios
