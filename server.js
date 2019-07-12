@@ -62,14 +62,14 @@ app.get("/scrape-route", function(req, res) {
 
           .then(function(dbArticle) {
             // View the added result in the console
-            // console.log("dbArticle", dbArticle);
+            console.log("dbArticle", dbArticle);
           })
           .catch(function(err) {
             // If an error occurred, log it
             console.log(err);
           });
       });
-      // res.send("Scraping Complete.");
+      res.send("Scraping Complete.");
       res.redirect("scrape");
     });
 });
