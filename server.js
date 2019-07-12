@@ -37,7 +37,7 @@ app.get("/scrape-route", function(req, res) {
       let result = {};
       // scraping function - steps down through HTML elements to get desired items
       $("div.list-text").each(function(i, element) {
-        // console.log(element);
+        console.log(element);
         result.title = $(this)
           .children("h2")
           .children("a")
