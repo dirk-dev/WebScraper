@@ -44,7 +44,7 @@ $(document).on("click", ".save-article-btn", function() {
   // console.log(this);
   // Grab the id associated with the article from the submit button
   var thisId = $(this).attr("data-id");
-  console.log("thisId = ", thisId);
+  // console.log("thisId = ", thisId);
 
   // PUT for changing article status to isSaved:true
   $.ajax({
@@ -91,7 +91,7 @@ $(document).on("click", ".show-notes-btn", function() {
   $("#individual-note").empty();
   // Save the id
   var thisId = $(this).attr("data-id");
-  console.log("thisId - line 94", thisId); //returns good data
+  // console.log("thisId - line 94", thisId); //returns good data
 
   // Now make an ajax call for the Article
   $.ajax({
@@ -157,7 +157,7 @@ $(document).on("click", "#savenote", function() {
       body: $(".bodyinput").val()
     }
   }).then(function(data) {
-    console.log(data);
+    // console.log(data);
     // Empty the individual-note section
     $("#individual-note").empty();
   });
@@ -182,7 +182,7 @@ $(document).on("click", ".deletenote", function() {
       body: $(".bodyinput").val()
     }
   }).then(function(data) {
-    console.log(data);
+    //  console.log(data);
     // Empty the individual-note section
     $("#individual-note").empty();
     location.reload();

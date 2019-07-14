@@ -27,33 +27,43 @@ let MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/webScraper";
 mongoose.connect(MONGODB_URI, { useNewUrlParser: true });
 
 app.get("/scrape-route", function(req, res) {
-  // THIS DOES NOT FIRE
+  console.log("scraping");
+  /***************
+  THIS DOES NOT FIRE *************************** */
   // Make a request via axios to grab the HTML body
 
   axios
     .get("https://www.space.com/science-astronomy/")
     .then(function(response) {
       let $ = cheerio.load(response.data);
+      // console.log(`response, line 39 ${response.data}`);
 
       let result = {};
       // scraping function - steps down through HTML elements to get desired items
-      $("div.list-text").each(function(i, element) {
-        console.log(element);
+      // this reflects the updated structure for the website as of ? 7/2019?
+      $("div.listingResult").each(function(i, element) {
+        // update 7/13-listingResult small
+        // console.log(element);
         result.title = $(this)
-          .children("h2")
           .children("a")
+          .children("article")
+          .children("div.content")
+          .children("header")
+          .children("h3.article-name")
           .text()
           //strips out extra spaces before/after the content
           .replace(/\s\s+/g, "");
-        result.summary = $(this)
-          .children("p.mod-copy")
+        result.summary = $(this) // updated 7/13/2019
+          .children("a")
+          .children("article")
+          .children("div.content")
+          .children("p.synopsis")
           .text()
           .replace(/\s\s+/g, "")
           .replace("Read More", "");
-        result.articleUrl = "https://www.space.com";
-        result.articleUrl += $(this)
-          .children("p.mod-copy")
-          .children("a.read-url")
+        //result.articleUrl = "https://www.space.com/";
+        result.articleUrl = $(this)
+          .children("a")
           .attr("href");
 
         // Create a new Article using the `result` object built from scraping
@@ -61,7 +71,7 @@ app.get("/scrape-route", function(req, res) {
 
           .then(function(dbArticle) {
             // View the added result in the console
-            // console.log("dbArticle", dbArticle);
+            console.log("dbArticle", dbArticle);
           })
           .catch(function(err) {
             // If an error occurred, log it
@@ -81,7 +91,7 @@ app.put("/submit", function(req, res) {
     { $set: { isSaved: true } },
     { new: true }
   ).then(function(dbArticle) {
-    console.log(dbArticle);
+    //console.log(dbArticle);
     res.json("true");
   });
 });
@@ -94,7 +104,7 @@ app.put("/delete", function(req, res) {
     { $set: { isSaved: false } },
     { new: true }
   ).then(function(dbArticle) {
-    console.log(dbArticle);
+    // console.log(dbArticle);
     res.json("true");
   });
 });
@@ -142,7 +152,7 @@ app.get("/articles/:id", function(req, res) {
 app.post("/articles/:id", function(req, res) {
   db.Note.create(req.body)
     .then(function(dbNote) {
-      console.log("line 144", req.params.id);
+      // console.log("line 144", req.params.id);
       return db.Article.findOneAndUpdate(
         { _id: req.params.id },
         { $push: { notes: dbNote._id } },
@@ -150,7 +160,7 @@ app.post("/articles/:id", function(req, res) {
       );
     })
     .then(function(dbArticle) {
-      console.log("server.js line 152", dbArticle);
+      //  console.log("server.js line 152", dbArticle);
       res.json(dbArticle);
     })
     .catch(function(err) {
@@ -163,7 +173,7 @@ app.put("/articles/:id", function(req, res) {
   db.Note.findOneAndRemove(req.body)
 
     .then(function(dbNote) {
-      console.log("server.js line 172", dbNote);
+      console.log("server.js line 176", dbNote);
       res.json(dbNote);
     })
     .catch(function(err) {

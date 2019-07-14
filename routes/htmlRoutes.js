@@ -1,5 +1,5 @@
 module.exports = function(app) {
-  app.get("/scrape-route", (req, res) => {
+  app.get("/scrape", (req, res) => {
     res.render("scraped");
   });
 
